@@ -9,12 +9,12 @@ public class RocketMove : MonoBehaviour {
 	// 定数
 	//----------------------------------
 
-	private float cDamper = 0.99f;
-	private float cRotDamper = 0.99f;
-	private float cAccLow = 0.001f;
-	private float cAccHigh = 0.002f;
-	private float cRotAccLow = 0.1f;
-	private float cRotAccHigh = 0.2f;
+	private float cDamper = 0.55f;
+	private float cRotDamper = 0.25f;
+	private float cAccLow = 0.04f;
+	private float cAccHigh = 0.1f;
+	private float cRotAccLow = 0.0f;
+	private float cRotAccHigh = 10.0f;
 
 	//----------------------------------
 	// メンバ変数
@@ -50,10 +50,10 @@ public class RocketMove : MonoBehaviour {
 		float rotAccRight = Mathf.Lerp (cRotAccLow, cRotAccHigh, mSliderRight.value);
 
 		// ダンパー
-		mVel *= Mathf.Pow (cDamper, Time.deltaTime * 60);
+		mVel *= Mathf.Pow (cDamper, Time.deltaTime);
 
 		// 加速
-		mVel += transform.up * (accLeft + accRight) * Time.deltaTime * 60;
+		mVel += transform.up * (accLeft + accRight) * Time.deltaTime;
 
 		// 位置更新
 		Vector3 pos = transform.position;
@@ -61,10 +61,10 @@ public class RocketMove : MonoBehaviour {
 		transform.position = pos;
 
 		// 回転ダンパー
-		mRotVel *= Mathf.Pow(cRotDamper, Time.deltaTime * 60);
+		mRotVel *= Mathf.Pow(cRotDamper, Time.deltaTime);
 
 		// 回転更新
-		mRotVel += - rotAccLeft + rotAccRight;
+		mRotVel += ( - rotAccLeft + rotAccRight ) * Time.deltaTime;
 
 		// 回転
 		transform.RotateAround(transform.position, Vector3.forward, mRotVel);
