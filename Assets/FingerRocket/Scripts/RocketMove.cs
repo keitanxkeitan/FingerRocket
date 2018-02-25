@@ -60,7 +60,7 @@ public class RocketMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (mIsDestroyed) {
-			if (Input.GetKey (KeyCode.Space)) {
+			if (Input.GetKey (KeyCode.Space) || ((Input.touchCount > 0 ) && (Input.GetTouch(0).phase == TouchPhase.Began))) {
 				Application.LoadLevel ("Game");
 			}
 			return;
