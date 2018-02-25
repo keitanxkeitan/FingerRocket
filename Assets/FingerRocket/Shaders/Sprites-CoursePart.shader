@@ -44,18 +44,18 @@ Shader "Sprites/CoursePart"
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
             #include "UnitySprites.cginc"
 
-            #define T_TO_B 0
-            #define T_TO_L 1
-            #define T_TO_R 2
-            #define B_TO_T 3
-            #define B_TO_L 4
-            #define B_TO_R 5
-            #define L_TO_T 6
-            #define L_TO_B 7
-            #define L_TO_R 8
-            #define R_TO_T 9
-            #define R_TO_B 10
-            #define R_TO_L 11
+            #define T2B 0
+            #define T2L 1
+            #define T2R 2
+            #define B2T 3
+            #define B2L 4
+            #define B2R 5
+            #define L2T 6
+            #define L2B 7
+            #define L2R 8
+            #define R2T 9
+            #define R2B 10
+            #define R2L 11
 
             int _PartType;
             fixed4 _CourseColor;
@@ -73,27 +73,27 @@ Shader "Sprites/CoursePart"
             	float min = 0.5 * (1.0 - courseWidth);
             	float max = 0.5 * (1.0 + courseWidth);
 
-            	if((partType == T_TO_B) || (partType == B_TO_T))
+            	if((partType == T2B) || (partType == B2T))
             	{
             		return (IN.texcoord.x >= min) && (IN.texcoord.x <= max);
             	}
-            	else if((partType == L_TO_R) || (partType == R_TO_L))
+            	else if((partType == L2R) || (partType == R2L))
             	{
             		return (IN.texcoord.y >= min) && (IN.texcoord.y <= max);
             	}
-            	else if((partType == T_TO_L) || (partType == L_TO_T))
+            	else if((partType == T2L) || (partType == L2T))
             	{
             		return checkCourseCurve(IN, float2(0.0, 1.0), min, max);
             	}
-            	else if((partType == T_TO_R) || (partType == R_TO_T))
+            	else if((partType == T2R) || (partType == R2T))
             	{
             		return checkCourseCurve(IN, float2(1.0, 1.0), min, max);
             	}
-            	else if((partType == B_TO_L) || (partType == L_TO_B))
+            	else if((partType == B2L) || (partType == L2B))
             	{
             		return checkCourseCurve(IN, float2(0.0, 0.0), min, max);
             	}
-            	else if((partType == B_TO_R) || (partType == R_TO_B))
+            	else if((partType == B2R) || (partType == R2B))
             	{
             		return checkCourseCurve(IN, float2(1.0, 0.0), min, max);
             	}

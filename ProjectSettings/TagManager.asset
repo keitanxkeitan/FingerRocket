@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: CoursePart
+    uniqueID: 3329302309
+    locked: 0
+  - name: Rocket
+    uniqueID: 2270240099
+    locked: 0
