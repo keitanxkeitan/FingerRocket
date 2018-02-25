@@ -35,6 +35,12 @@ public class RocketMove : MonoBehaviour {
 	// コリジョン
 	public CollisionManager mCollisionManager;
 
+	// SE
+	private AudioSource mAudioSourceDestroy;
+
+	// やられ
+	private bool mIsDestroyed;
+
 	// Use this for initialization
 	void Start () {
 		// 速度
@@ -43,10 +49,23 @@ public class RocketMove : MonoBehaviour {
 
 		// 角速度
 		mRotVel = 0.0f;
+
+		// SE
+		mAudioSourceDestroy = GetComponent<AudioSource>();
+
+		// やられ
+		mIsDestroyed = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (mIsDestroyed) {
+			if (Input.GetKey (KeyCode.Space)) {
+				Application.LoadLevel ("Game");
+			}
+			return;
+		}
+
 		CalcMove ();
 
 		CalcCollision ();
@@ -87,7 +106,10 @@ public class RocketMove : MonoBehaviour {
 	void CalcCollision()
 	{
 		if (mCollisionManager.CheckSphereCollision (transform.position, 0.1f)) {
-			Application.LoadLevel ("Game");
+			mIsDestroyed = true;
+			Destroy (GetComponent<SpriteRenderer> ());
+			mAudioSourceDestroy.PlayOneShot (mAudioSourceDestroy.clip);
+			iTween.ShakePosition (GameObject.FindWithTag ("MainCamera"), iTween.Hash ("x", 0.3f, "y", 0.3f, "time", 0.2f));
 		}
 	}
 }
