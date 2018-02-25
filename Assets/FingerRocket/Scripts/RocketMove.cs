@@ -32,14 +32,25 @@ public class RocketMove : MonoBehaviour {
 	[SerializeField] private Slider mSliderLeft;
 	[SerializeField] private Slider mSliderRight;
 
+	// 距離
+	[SerializeField] private Text mTextDistance;
+
 	// コリジョン
 	public CollisionManager mCollisionManager;
+
+	// パーティクル
+	public GameObject mParticleSystemSmokeLeft;
+	public GameObject mParticleSystemSmokeRight;
+	public GameObject mParticleSystemCrushSmoke;
 
 	// SE
 	private AudioSource mAudioSourceDestroy;
 
 	// やられ
 	private bool mIsDestroyed;
+
+	// 移動距離
+	private float mDistance;
 
 	// Use this for initialization
 	void Start () {
@@ -69,6 +80,8 @@ public class RocketMove : MonoBehaviour {
 		CalcMove ();
 
 		CalcCollision ();
+
+		CalcParticle ();
 	}
 
 	void CalcMove()
@@ -101,6 +114,9 @@ public class RocketMove : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos += mSpeed * mMoveDir;
 		transform.position = pos;
+
+		mDistance += mSpeed;
+		mTextDistance.text = ((int)mDistance).ToString ();
 	}
 
 	void CalcCollision()
@@ -110,6 +126,19 @@ public class RocketMove : MonoBehaviour {
 			Destroy (GetComponent<SpriteRenderer> ());
 			mAudioSourceDestroy.PlayOneShot (mAudioSourceDestroy.clip);
 			iTween.ShakePosition (GameObject.FindWithTag ("MainCamera"), iTween.Hash ("x", 0.3f, "y", 0.3f, "time", 0.2f));
+			mParticleSystemCrushSmoke.transform.position = transform.position;
+			mParticleSystemCrushSmoke.GetComponent<ParticleSystem> ().Play ();
+			mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().Stop ();
+			mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().Stop ();
 		}
+	}
+
+	void CalcParticle()
+	{
+		mParticleSystemSmokeLeft.transform.position = transform.position - transform.up * 0.25f - transform.right * 0.05f;
+		mParticleSystemSmokeRight.transform.position = transform.position - transform.up * 0.25f + transform.right * 0.05f;
+
+		mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (0.1f, 0.15f, mSliderLeft.value);
+		mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (0.1f, 0.15f, mSliderRight.value);
 	}
 }
