@@ -349,9 +349,55 @@ Prefab:
       propertyPath: mSliderRight
       value: 
       objectReference: {fileID: 896957871}
+    - target: {fileID: 114333454335115358, guid: 5cabc020b606844d799582defe70b9ae,
+        type: 2}
+      propertyPath: mCollisionManager
+      value: 
+      objectReference: {fileID: 354924085}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5cabc020b606844d799582defe70b9ae, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &354924084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 354924086}
+  - component: {fileID: 354924085}
+  m_Layer: 0
+  m_Name: CollisionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &354924085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 354924084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf23f5a52fdb40b3baf9372feddf0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCourseManager: {fileID: 1496463143}
+--- !u!4 &354924086
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 354924084}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &685347605
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +624,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0.1}
-  m_AnchorMax: {x: 0.2, y: 0.3}
+  m_AnchorMax: {x: 0.2, y: 0.25}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0}
@@ -663,7 +709,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8, y: 0.1}
-  m_AnchorMax: {x: 0.8, y: 0.3}
+  m_AnchorMax: {x: 0.8, y: 0.25}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0}
@@ -1083,6 +1129,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1494506212}
+--- !u!114 &1496463143 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114443728379766892, guid: ff635a3bccf20407895b9b3c1169b5d0,
+    type: 2}
+  m_PrefabInternal: {fileID: 819032020}
+  m_Script: {fileID: 11500000, guid: 877b90eb1ceff486d9762b62a7a43e2f, type: 3}
 --- !u!1001 &1709961180
 Prefab:
   m_ObjectHideFlags: 0

@@ -37,7 +37,10 @@ public class CourseManager : MonoBehaviour {
 	};
 
 	// 部品サイズ
-	private const float cPartSize = 5.12f;
+	public static float cPartSize = 5.12f; // -Todo- const をつけるとパーサーエラーになったので外しているが理由がわからない
+
+	// コース幅
+	public static float cCourseWidth = 0.5f; // -Todo- const をつけるとパーサーエラーになったので外しているが理由がわからない
 
 	// 色
 	private const int cColorNum = 6;
@@ -52,9 +55,6 @@ public class CourseManager : MonoBehaviour {
 	// 色
 	public Color[] mCourseColor = new Color[cColorNum];
 	public Color[] mBackgroundColor = new Color[cColorNum];
-
-	// コース幅
-	public float mCourseWidth = 0.5f;
 
 	// 部品リスト
 	private List<GameObject> mParts = new List<GameObject>();
@@ -90,7 +90,7 @@ public class CourseManager : MonoBehaviour {
 		material.SetInt ("_PartType", (int)partType);
 		material.SetColor ("_CourseColor", courseColor);
 		material.SetColor ("_BackgroundColor", backgroundColor);
-		material.SetFloat ("_CourseWidth", mCourseWidth);
+		material.SetFloat ("_CourseWidth", cCourseWidth);
 		part.GetComponent<CoursePart> ().Setup (partType, pos);
 		mParts.Add (part);
 		return part;
@@ -531,5 +531,16 @@ public class CourseManager : MonoBehaviour {
 			partTypes.Add (PartType.B2L);
 			break;
 		}
+	}
+
+	public bool CheckSphereCollision(Vector3 pos, float radius)
+	{
+		foreach(GameObject part in mParts)
+		{
+			if (part.GetComponent<CoursePart> ().CheckSphereCollision (pos, radius)) {
+				return true;
+			}	
+		}
+		return false;
 	}
 }
