@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class RocketMove : MonoBehaviour {
 
 	//----------------------------------
-	// 定数
+	// パラメータ
 	//----------------------------------
 
-	private float cKd = 0.4f;
-	private float cRotKd = 0.2f;
-	private float cAccLow = 0.04f;
-	private float cAccHigh = 0.04f;
-	private float cRotAccLow = 0.0f;
-	private float cRotAccHigh = 5.0f;
-	private float cMoveDirKf = 1.0f;
+	[SerializeField] private float mKd = 0.4f;
+	[SerializeField] private float mRotKd = 0.2f;
+	[SerializeField] private float mAccLow = 0.04f;
+	[SerializeField] private float mAccHigh = 0.04f;
+	[SerializeField] private float mRotAccLow = 0.0f;
+	[SerializeField] private float mRotAccHigh = 5.0f;
+	[SerializeField] private float mMoveDirKf = 1.0f;
 
 	//----------------------------------
 	// メンバ変数
@@ -87,25 +87,25 @@ public class RocketMove : MonoBehaviour {
 	void CalcMove()
 	{
 		// 加速度
-		float accLeft = Mathf.Lerp (cAccLow, cAccHigh, mSliderLeft.value);
-		float accRight = Mathf.Lerp (cAccLow, cAccHigh, mSliderRight.value);
+		float accLeft = Mathf.Lerp (mAccLow, mAccHigh, mSliderLeft.value);
+		float accRight = Mathf.Lerp (mAccLow, mAccHigh, mSliderRight.value);
 
 		// 角加速度
-		float rotAccLeft = Mathf.Lerp (cRotAccLow, cRotAccHigh, mSliderLeft.value);
-		float rotAccRight = Mathf.Lerp (cRotAccLow, cRotAccHigh, mSliderRight.value);
+		float rotAccLeft = Mathf.Lerp (mRotAccLow, mRotAccHigh, mSliderLeft.value);
+		float rotAccRight = Mathf.Lerp (mRotAccLow, mRotAccHigh, mSliderRight.value);
 
 		// 回転ダンパー
-		mRotVel *= Mathf.Pow(cRotKd, Time.deltaTime);
+		mRotVel *= Mathf.Pow(mRotKd, Time.deltaTime);
 
 		// 回転更新
 		mRotVel += ( - rotAccLeft + rotAccRight ) * Time.deltaTime;
 
 		// 回転
 		transform.RotateAround(transform.position, Vector3.forward, mRotVel);
-		mMoveDir = Vector3.Slerp (mMoveDir, transform.up, cMoveDirKf);
+		mMoveDir = Vector3.Slerp (mMoveDir, transform.up, mMoveDirKf);
 
 		// ダンパー
-		mSpeed *= Mathf.Pow (cKd, Time.deltaTime);
+		mSpeed *= Mathf.Pow (mKd, Time.deltaTime);
 
 		// 加速
 		mSpeed += (accLeft + accRight) * Time.deltaTime;

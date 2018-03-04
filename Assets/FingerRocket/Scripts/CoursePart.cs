@@ -38,10 +38,10 @@ public class CoursePart : MonoBehaviour {
 
 	bool CheckCourse(Vector3 posLocal, float radius)
 	{
-		float cPartSizeHalf = CourseManager.cPartSize * 0.5f;
+		float cPartSizeHalf = CourseManager.PartSize * 0.5f;
 			
-		float min = -cPartSizeHalf * CourseManager.cCourseWidth + radius;
-		float max = +cPartSizeHalf * CourseManager.cCourseWidth - radius;
+		float min = -cPartSizeHalf * CourseManager.CourseWidth + radius;
+		float max = +cPartSizeHalf * CourseManager.CourseWidth - radius;
 
 		if ((mPartType == CourseManager.PartType.T2B) || (mPartType == CourseManager.PartType.B2T)) {
 			return (posLocal.x >= min) && (posLocal.x <= max);
@@ -66,7 +66,7 @@ public class CoursePart : MonoBehaviour {
 
 	public bool CheckSphereCollision(Vector3 pos, float radius)
 	{
-		float cPartSizeHalf = CourseManager.cPartSize * 0.5f;
+		float cPartSizeHalf = CourseManager.PartSize * 0.5f;
 		Vector3 posLocal = pos - mPos;
 		if ((posLocal.x < -cPartSizeHalf) || (posLocal.x > cPartSizeHalf) || (posLocal.y < -cPartSizeHalf) || (posLocal.y > cPartSizeHalf)) {
 			return false;

@@ -36,14 +36,26 @@ public class CourseManager : MonoBehaviour {
 		Num
 	};
 
+	//----------------------------------
+	// パラメータ
+	//----------------------------------
+
 	// 部品サイズ
-	public static float cPartSize = 5.12f; // -Todo- const をつけるとパーサーエラーになったので外しているが理由がわからない
+	[SerializeField] private static float mPartSize = 5.12f;
+	public static float PartSize
+	{
+		get { return CourseManager.mPartSize; }
+	}
 
 	// コース幅
-	public static float cCourseWidth = 0.5f; // -Todo- const をつけるとパーサーエラーになったので外しているが理由がわからない
+	[SerializeField] private static float mCourseWidth = 0.5f;
+	public static float CourseWidth
+	{
+		get { return CourseManager.mCourseWidth; }
+	}
 
 	// 色
-	private const int cColorNum = 6;
+	[SerializeField] private static int mColorNum = 6;
 
 	//----------------------------------
 	// メンバ変数
@@ -53,8 +65,8 @@ public class CourseManager : MonoBehaviour {
 	public GameObject mPartPrefab;
 
 	// 色
-	public Color[] mCourseColor = new Color[cColorNum];
-	public Color[] mBackgroundColor = new Color[cColorNum];
+	public Color[] mCourseColor = new Color[mColorNum];
+	public Color[] mBackgroundColor = new Color[mColorNum];
 
 	// 部品リスト
 	private List<GameObject> mParts = new List<GameObject>();
@@ -67,7 +79,7 @@ public class CourseManager : MonoBehaviour {
 		// 色決め
 		int colorIndex = -1;
 		do {
-			colorIndex = Random.Range(0, cColorNum - 1);
+			colorIndex = Random.Range(0, mColorNum - 1);
 		} while(sColorIndex == colorIndex);
 		sColorIndex = colorIndex;
 
@@ -90,7 +102,7 @@ public class CourseManager : MonoBehaviour {
 		material.SetInt ("_PartType", (int)partType);
 		material.SetColor ("_CourseColor", courseColor);
 		material.SetColor ("_BackgroundColor", backgroundColor);
-		material.SetFloat ("_CourseWidth", cCourseWidth);
+		material.SetFloat ("_CourseWidth", mCourseWidth);
 		part.GetComponent<CoursePart> ().Setup (partType, pos);
 		mParts.Add (part);
 		return part;
@@ -114,9 +126,9 @@ public class CourseManager : MonoBehaviour {
 			}
 		}
 
-		InstantiatePart (Vector3.zero - Vector3.up * cPartSize * 2, PartType.B2T, courseColor, backgroundColor);
-		InstantiatePart (Vector3.zero - Vector3.up * cPartSize * 1, PartType.B2T, courseColor, backgroundColor);
-		InstantiatePart (Vector3.zero - Vector3.up * cPartSize * 0, PartType.B2T, courseColor, backgroundColor);
+		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 2, PartType.B2T, courseColor, backgroundColor);
+		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 1, PartType.B2T, courseColor, backgroundColor);
+		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 0, PartType.B2T, courseColor, backgroundColor);
 
 		PartType prevPartType = PartType.B2T;
 		Vector3 prevPartPos = Vector3.zero;
@@ -324,13 +336,13 @@ public class CourseManager : MonoBehaviour {
 	{
 		switch (dir) {
 		case Dir.Up:
-			return new Vector3 (0.0f, cPartSize, 0.0f);
+			return new Vector3 (0.0f, mPartSize, 0.0f);
 		case Dir.Down:
-			return new Vector3 (0.0f, -cPartSize, 0.0f);
+			return new Vector3 (0.0f, -mPartSize, 0.0f);
 		case Dir.Left:
-			return new Vector3 (-cPartSize, 0.0f, 0.0f);
+			return new Vector3 (-mPartSize, 0.0f, 0.0f);
 		case Dir.Right:
-			return new Vector3 (cPartSize, 0.0f, 0.0f);
+			return new Vector3 (mPartSize, 0.0f, 0.0f);
 		}
 		return Vector3.zero;
 	}
