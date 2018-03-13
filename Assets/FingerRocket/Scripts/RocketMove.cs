@@ -9,13 +9,17 @@ public class RocketMove : MonoBehaviour {
 	// パラメータ
 	//----------------------------------
 
-	[SerializeField] private float mKd = 0.4f;
-	[SerializeField] private float mRotKd = 0.2f;
-	[SerializeField] private float mAccLow = 0.04f;
-	[SerializeField] private float mAccHigh = 0.04f;
+	[SerializeField] private float mKd = 0.05f;
+	[SerializeField] private float mRotKd = 0.5f;
+	[SerializeField] private float mBaseSpeed = 0.75f;
+	[SerializeField] private float mAccLow = 0.005f;
+	[SerializeField] private float mAccHigh = 0.15f;
 	[SerializeField] private float mRotAccLow = 0.0f;
-	[SerializeField] private float mRotAccHigh = 5.0f;
+	[SerializeField] private float mRotAccHigh = 10.0f;
 	[SerializeField] private float mMoveDirKf = 1.0f;
+
+	[SerializeField] private float mSmokeStartSizeLow = 0.1f;
+	[SerializeField] private float mSmokeStartSizeHigh = 0.15f;
 
 	//----------------------------------
 	// メンバ変数
@@ -112,7 +116,7 @@ public class RocketMove : MonoBehaviour {
 
 		// 位置更新
 		Vector3 pos = transform.position;
-		pos += mSpeed * mMoveDir;
+		pos += (mBaseSpeed * Time.deltaTime + mSpeed ) * mMoveDir;
 		transform.position = pos;
 
 		mDistance += mSpeed;
@@ -138,7 +142,7 @@ public class RocketMove : MonoBehaviour {
 		mParticleSystemSmokeLeft.transform.position = transform.position - transform.up * 0.25f - transform.right * 0.05f;
 		mParticleSystemSmokeRight.transform.position = transform.position - transform.up * 0.25f + transform.right * 0.05f;
 
-		mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (0.1f, 0.15f, mSliderLeft.value);
-		mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (0.1f, 0.15f, mSliderRight.value);
+		mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (mSmokeStartSizeLow, mSmokeStartSizeHigh, mSliderLeft.value);
+		mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (mSmokeStartSizeLow, mSmokeStartSizeHigh, mSliderRight.value);
 	}
 }
