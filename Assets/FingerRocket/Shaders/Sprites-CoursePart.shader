@@ -56,6 +56,10 @@ Shader "Sprites/CoursePart"
             #define R2T 9
             #define R2B 10
             #define R2L 11
+            #define T2B_Sin 12
+            #define B2T_Sin 13
+            #define L2R_Sin 14
+            #define R2L_Sin 15
 
             int _PartType;
             fixed4 _CourseColor;
@@ -66,6 +70,13 @@ Shader "Sprites/CoursePart"
             {
             	float squaredDistance = (IN.texcoord.x - center.x) * (IN.texcoord.x - center.x) + (IN.texcoord.y - center.y) * (IN.texcoord.y - center.y);
             	return (squaredDistance >= (min * min)) && (squaredDistance <= (max * max));
+            }
+
+            bool checkCourseSin(float x, float y, float courseWidth)
+            {
+            	float min = sin(x) * 0.25 - courseWidth;
+            	float max = sin(x) * 0.25 + courseWidth;
+            	return (y >= min) && (y <= max);
             }
 
             bool checkCourse(v2f IN, int partType, float courseWidth)
@@ -96,6 +107,18 @@ Shader "Sprites/CoursePart"
             	else if((partType == B2R) || (partType == R2B))
             	{
             		return checkCourseCurve(IN, float2(1.0, 0.0), min, max);
+            	}
+            	else if((partType == T2B_Sin) || (partType == B2T_Sin))
+            	{
+            		float x = IN.texcoord.y * 3.14159 * 2.0;
+            		float y = (0.5 - IN.texcoord.x) / 0.5;
+            		return checkCourseSin(x, y, courseWidth);
+            	}
+            	else if((partType == L2R_Sin) || (partType == R2L_Sin))
+            	{
+            		float x = IN.texcoord.x * 3.14159 * 2.0;
+            		float y = (IN.texcoord.y - 0.5) / 0.5;
+            		return checkCourseSin(x, y, courseWidth);
             	}
             	return false;
             }

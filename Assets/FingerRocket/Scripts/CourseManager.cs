@@ -23,6 +23,10 @@ public class CourseManager : MonoBehaviour {
 		R2T,
 		R2B,
 		R2L,
+		T2B_Sin,
+		B2T_Sin,
+		L2R_Sin,
+		R2L_Sin,
 		Num
 	};
 
@@ -255,10 +259,33 @@ public class CourseManager : MonoBehaviour {
 				partTypes.Add(partType);
 			}
 
+			for(int i = 0; i < partTypes.Count; ++i) {
+				if (partNum >= 15 && Random.Range(0, 4) == 0) {
+					switch(partTypes[ i ]) {
+					case PartType.T2B:
+						partTypes[ i ] = PartType.T2B_Sin;
+						break;
+					case PartType.B2T:
+						partTypes[ i ] = PartType.B2T_Sin;
+						break;
+					case PartType.L2R:
+						partTypes[ i ] = PartType.L2R_Sin;
+						break;
+					case PartType.R2L:
+						partTypes[ i ] = PartType.R2L_Sin;
+						break;
+					}
+				}
+			}
+
 			foreach(PartType partType in partTypes)
 			{
 				Vector3 delta = Dir2Delta(currDir);
 				Vector3 partPos = prevPartPos + delta;
+				if(partNum == 127) {
+					courseColor = mCourseColor[(sColorIndex + 1) % mColorNum];
+					backgroundColor = mBackgroundColor[(sColorIndex + 1) % mColorNum];
+				}
 				InstantiatePart(partPos, partType, courseColor, backgroundColor);
 
 				Vector2 delta2 = Dir2Delta2(currDir);
@@ -271,7 +298,7 @@ public class CourseManager : MonoBehaviour {
 
 				++partNum;
 			}
-		} while (partNum < 256);
+		} while (partNum < 128);
 	}
 
 	// 部品から方向
@@ -281,18 +308,22 @@ public class CourseManager : MonoBehaviour {
 		case PartType.B2T:
 		case PartType.L2T:
 		case PartType.R2T:
+		case PartType.B2T_Sin:
 			return Dir.Up;
 		case PartType.T2B:
 		case PartType.L2B:
 		case PartType.R2B:
+		case PartType.T2B_Sin:
 			return Dir.Down;
 		case PartType.T2L:
 		case PartType.B2L:
 		case PartType.R2L:
+		case PartType.R2L_Sin:
 			return Dir.Left;
 		case PartType.T2R:
 		case PartType.B2R:
 		case PartType.L2R:
+		case PartType.L2R_Sin:
 			return Dir.Right;
 		}
 		return Dir.Up;
@@ -554,5 +585,17 @@ public class CourseManager : MonoBehaviour {
 			}	
 		}
 		return false;
+	}
+
+	public int CheckInsideCoursePart(Vector3 pos)
+	{
+		int i = 0;
+		foreach (GameObject part in mParts) {
+			if (part.GetComponent<CoursePart> ().CheckInside (pos)) {
+				return i;
+			}
+			++i;
+		}
+		return -1;
 	}
 }

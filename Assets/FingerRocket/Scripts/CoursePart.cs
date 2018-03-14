@@ -36,6 +36,13 @@ public class CoursePart : MonoBehaviour {
 		return (squaredDistance >= (min * min)) && (squaredDistance <= (max * max));
 	}
 
+	bool CheckCourseSin(float x, float y, float radius)
+	{
+		float min = Mathf.Sin (x) * 0.25f - CourseManager.CourseWidth + radius;
+		float max = Mathf.Sin (x) * 0.25f + CourseManager.CourseWidth - radius;
+		return (y >= min) && (y <= max);
+	}
+
 	bool CheckCourse(Vector3 posLocal, float radius)
 	{
 		float cPartSizeHalf = CourseManager.PartSize * 0.5f;
@@ -61,6 +68,17 @@ public class CoursePart : MonoBehaviour {
 		} else if ((mPartType == CourseManager.PartType.B2R) || (mPartType == CourseManager.PartType.R2B)) {
 			return CheckCourseCurve (posLocal, new Vector3 (cPartSizeHalf, -cPartSizeHalf, 0.0f), min, max);
 		}
+
+		if ((mPartType == CourseManager.PartType.B2T_Sin) || (mPartType == CourseManager.PartType.T2B_Sin)) {
+			float x = ((posLocal.y + cPartSizeHalf) / CourseManager.PartSize) * Mathf.PI * 2.0f;
+			float y = -posLocal.x / cPartSizeHalf;
+			return CheckCourseSin (x, y, radius / cPartSizeHalf);
+		} else if ((mPartType == CourseManager.PartType.L2R_Sin) || (mPartType == CourseManager.PartType.R2L_Sin)) {
+			float x = ((posLocal.x + cPartSizeHalf) / CourseManager.PartSize) * Mathf.PI * 2.0f;
+			float y = posLocal.y / cPartSizeHalf;
+			return CheckCourseSin (x, y, radius / cPartSizeHalf);
+		}
+
 		return false;
 	}
 
@@ -72,5 +90,12 @@ public class CoursePart : MonoBehaviour {
 			return false;
 		}
 		return !CheckCourse (posLocal, radius);
+	}
+
+	public bool CheckInside(Vector3 pos)
+	{
+		float cPartSizeHalf = CourseManager.PartSize * 0.5f;
+		Vector3 posLocal = pos - mPos;
+		return ((posLocal.x >= -cPartSizeHalf) && (posLocal.x <= cPartSizeHalf) && (posLocal.y >= -cPartSizeHalf) && (posLocal.y <= cPartSizeHalf));
 	}
 }

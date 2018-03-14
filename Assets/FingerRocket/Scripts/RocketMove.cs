@@ -39,6 +39,12 @@ public class RocketMove : MonoBehaviour {
 	// 距離
 	[SerializeField] private Text mTextDistance;
 
+	// タイム
+	[SerializeField] private Text mTextTime;
+
+	// コースマネージャ
+	public CourseManager mCourseManager;
+
 	// コリジョン
 	public CollisionManager mCollisionManager;
 
@@ -53,8 +59,17 @@ public class RocketMove : MonoBehaviour {
 	// やられ
 	private bool mIsDestroyed;
 
-	// 移動距離
-	private float mDistance;
+	// タイム
+	private float mTime;
+
+	// ゴール
+	private bool mIsGoal;
+
+	// カメラサイズ
+	private static float sSliderCameraSizeValue = 0.0f;
+
+	// 無敵
+	private static bool sIsInvincible = false;
 
 	// Use this for initialization
 	void Start () {
@@ -70,10 +85,27 @@ public class RocketMove : MonoBehaviour {
 
 		// やられ
 		mIsDestroyed = false;
+
+		// タイム
+		mTime = 0.0f;
+
+		// ゴール
+		mIsGoal = false;
+
+		// カメラサイズ
+		GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value = sSliderCameraSizeValue;
+
+		// 無敵
+		GameObject.Find("ToggleInvincible").GetComponent<Toggle>().isOn = sIsInvincible;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		sSliderCameraSizeValue = GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value;
+		GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().orthographicSize = Mathf.Lerp (5.0f, 200.0f, sSliderCameraSizeValue);
+
+		sIsInvincible = GameObject.Find ("ToggleInvincible").GetComponent<Toggle> ().isOn;
+
 		if (mIsDestroyed) {
 			if (Input.GetKey (KeyCode.Space) || ((Input.touchCount > 0 ) && (Input.GetTouch(0).phase == TouchPhase.Began))) {
 				Application.LoadLevel ("Game");
@@ -86,6 +118,19 @@ public class RocketMove : MonoBehaviour {
 		CalcCollision ();
 
 		CalcParticle ();
+
+		int coursePartIndex = mCourseManager.CheckInsideCoursePart (transform.position);
+		mTextDistance.text = coursePartIndex.ToString ();
+
+		if (!mIsGoal) {
+			mTime += Time.deltaTime;
+		}
+		mTextTime.text = mTime.ToString ("F2");
+
+		if (coursePartIndex == 127) {
+			mIsGoal = true;
+			GameObject.Find ("TextGoal").GetComponent<Text> ().text = "GOAL!";
+		}
 	}
 
 	void CalcMove()
@@ -118,13 +163,13 @@ public class RocketMove : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos += (mBaseSpeed * Time.deltaTime + mSpeed ) * mMoveDir;
 		transform.position = pos;
-
-		mDistance += mSpeed;
-		mTextDistance.text = ((int)mDistance).ToString ();
 	}
 
 	void CalcCollision()
 	{
+		if (sIsInvincible)
+			return;
+		
 		if (mCollisionManager.CheckSphereCollision (transform.position, 0.1f)) {
 			mIsDestroyed = true;
 			Destroy (GetComponent<SpriteRenderer> ());
