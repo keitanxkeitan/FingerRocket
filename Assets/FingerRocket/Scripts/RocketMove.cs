@@ -93,18 +93,18 @@ public class RocketMove : MonoBehaviour {
 		mIsGoal = false;
 
 		// カメラサイズ
-		GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value = sSliderCameraSizeValue;
+		// GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value = sSliderCameraSizeValue;
 
 		// 無敵
-		GameObject.Find("ToggleInvincible").GetComponent<Toggle>().isOn = sIsInvincible;
+		// GameObject.Find("ToggleInvincible").GetComponent<Toggle>().isOn = sIsInvincible;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		sSliderCameraSizeValue = GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value;
-		GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().orthographicSize = Mathf.Lerp (5.0f, 200.0f, sSliderCameraSizeValue);
+		// sSliderCameraSizeValue = GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value;
+		// GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().orthographicSize = Mathf.Lerp (5.0f, 200.0f, sSliderCameraSizeValue);
 
-		sIsInvincible = GameObject.Find ("ToggleInvincible").GetComponent<Toggle> ().isOn;
+		// sIsInvincible = GameObject.Find ("ToggleInvincible").GetComponent<Toggle> ().isOn;
 
 		if (mIsDestroyed) {
 			if (Input.GetKey (KeyCode.Space) || ((Input.touchCount > 0 ) && (Input.GetTouch(0).phase == TouchPhase.Began))) {
@@ -184,8 +184,8 @@ public class RocketMove : MonoBehaviour {
 
 	void CalcParticle()
 	{
-		mParticleSystemSmokeLeft.transform.position = transform.position - transform.up * 0.25f - transform.right * 0.05f;
-		mParticleSystemSmokeRight.transform.position = transform.position - transform.up * 0.25f + transform.right * 0.05f;
+		mParticleSystemSmokeLeft.transform.position = transform.position - transform.up * 0.3f - transform.right * 0.07f;
+		mParticleSystemSmokeRight.transform.position = transform.position - transform.up * 0.3f + transform.right * 0.085f;
 
 		mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (mSmokeStartSizeLow, mSmokeStartSizeHigh, mSliderLeft.value);
 		mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().startSize = Mathf.Lerp (mSmokeStartSizeLow, mSmokeStartSizeHigh, mSliderRight.value);
