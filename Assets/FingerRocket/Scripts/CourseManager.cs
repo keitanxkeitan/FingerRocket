@@ -147,19 +147,19 @@ public class CourseManager : MonoBehaviour {
 			partTypes.Clear();
 			if ((currDir == Dir.Left) || (currDir == Dir.Right)) {
 				bool isSpecial = false;
-				if(partNum < 15)
+				if(partNum < 10)
 				{
 					isSpecial = false;
 				}
-				else if(partNum < 30)
+				else if(partNum < 20)
 				{
 					isSpecial = Random.Range(0, 4) == 0;
 				}
-				else if(partNum < 60)
+				else if(partNum < 30)
 				{
 					isSpecial = Random.Range(0, 2) == 0;
 				}
-				else if(partNum < 90)
+				else if(partNum < 40)
 				{
 					isSpecial = Random.Range(0, 1) == 0;
 				}
@@ -170,14 +170,14 @@ public class CourseManager : MonoBehaviour {
 				if(isSpecial)
 				{
 					List<int> table = new List<int>();
-					if(partNum < 30)
+					if(partNum < 20)
 					{
 						table.Add(2);
 						table.Add(2);
 						table.Add(3);
 						table.Add(3);
 					}
-					else if(partNum < 60)
+					else if(partNum < 30)
 					{
 						table.Add(2);
 						table.Add(2);
@@ -186,7 +186,7 @@ public class CourseManager : MonoBehaviour {
 						table.Add(1);
 						table.Add(1);
 					}
-					else if(partNum < 90)
+					else if(partNum < 40)
 					{
 						table.Add(2);
 						table.Add(2);
@@ -260,7 +260,7 @@ public class CourseManager : MonoBehaviour {
 			}
 
 			for(int i = 0; i < partTypes.Count; ++i) {
-				if (partNum >= 15 && Random.Range(0, 4) == 0) {
+				if (partNum >= 10 && Random.Range(0, 4) == 0) {
 					switch(partTypes[ i ]) {
 					case PartType.T2B:
 						partTypes[ i ] = PartType.T2B_Sin;
@@ -282,7 +282,7 @@ public class CourseManager : MonoBehaviour {
 			{
 				Vector3 delta = Dir2Delta(currDir);
 				Vector3 partPos = prevPartPos + delta;
-				if(partNum == 127) {
+				if(partNum == 59) {
 					courseColor = mCourseColor[(sColorIndex + 1) % mColorNum];
 					backgroundColor = mBackgroundColor[(sColorIndex + 1) % mColorNum];
 				}
@@ -298,7 +298,7 @@ public class CourseManager : MonoBehaviour {
 
 				++partNum;
 			}
-		} while (partNum < 128);
+		} while (partNum < 60);
 	}
 
 	// 部品から方向
