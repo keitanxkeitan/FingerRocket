@@ -98,4 +98,18 @@ public class CoursePart : MonoBehaviour {
 		Vector3 posLocal = pos - mPos;
 		return ((posLocal.x >= -cPartSizeHalf) && (posLocal.x <= cPartSizeHalf) && (posLocal.y >= -cPartSizeHalf) && (posLocal.y <= cPartSizeHalf));
 	}
+
+	public Vector3 RandomStarPos()
+	{
+		float cPartSizeHalf = CourseManager.PartSize * 0.5f;
+
+		while (true) {
+			Vector3 pos = mPos;
+			pos.x += Random.Range (-cPartSizeHalf, cPartSizeHalf);
+			pos.y += Random.Range (-cPartSizeHalf, cPartSizeHalf);
+			if (!CheckSphereCollision (pos, 0.15f)) {
+				return pos;
+			}
+		}
+	}
 }

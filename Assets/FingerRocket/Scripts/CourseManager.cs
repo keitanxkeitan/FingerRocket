@@ -91,6 +91,8 @@ public class CourseManager : MonoBehaviour {
 		GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().backgroundColor = mBackgroundColor[sColorIndex];
 
 		CreateCourse ();
+
+		CreateStar ();
 	}
 	
 	// Update is called once per frame
@@ -297,6 +299,19 @@ public class CourseManager : MonoBehaviour {
 				++partNum;
 			}
 		} while (partNum < 128);
+	}
+
+	// スター生成
+	void CreateStar()
+	{
+		const int cStart = 5;
+		const int cInterval = 3;
+		for (int i = cStart; i < 128; i += cInterval) {
+			int iTarget = i + (int)Random.Range (0, cInterval - 1);
+			GameObject part = mParts [iTarget];
+			Vector3 pos = part.GetComponent<CoursePart> ().RandomStarPos ();
+			GameObject.Find ("StarManager").GetComponent<StarManager> ().InstantiateStar (pos);
+		}
 	}
 
 	// 部品から方向

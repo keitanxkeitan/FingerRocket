@@ -42,8 +42,14 @@ public class RocketMove : MonoBehaviour {
 	// タイム
 	[SerializeField] private Text mTextTime;
 
+	// スター
+	[SerializeField] private Text mTextStar;
+
 	// コースマネージャ
 	public CourseManager mCourseManager;
+
+	// スターマネージャ
+	public StarManager mStarManager;
 
 	// コリジョン
 	public CollisionManager mCollisionManager;
@@ -61,6 +67,9 @@ public class RocketMove : MonoBehaviour {
 
 	// タイム
 	private float mTime;
+
+	// スター
+	private int mStar;
 
 	// ゴール
 	private bool mIsGoal;
@@ -88,6 +97,9 @@ public class RocketMove : MonoBehaviour {
 
 		// タイム
 		mTime = 0.0f;
+
+		// スター
+		mStar = 0;
 
 		// ゴール
 		mIsGoal = false;
@@ -126,6 +138,8 @@ public class RocketMove : MonoBehaviour {
 			mTime += Time.deltaTime;
 		}
 		mTextTime.text = mTime.ToString ("F2");
+
+		mTextStar.text = mStar.ToString ();
 
 		if (coursePartIndex == 64) {
 			mIsGoal = true;
@@ -179,6 +193,10 @@ public class RocketMove : MonoBehaviour {
 			mParticleSystemCrushSmoke.GetComponent<ParticleSystem> ().Play ();
 			mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().Stop ();
 			mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().Stop ();
+		}
+
+		if (mStarManager.CheckSphereCollision (transform.position, 0.1f)) {
+			++mStar;
 		}
 	}
 
