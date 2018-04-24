@@ -99,7 +99,7 @@ public class CourseManager : MonoBehaviour {
 	}
 
 	// 部品生成
-	GameObject InstantiatePart(Vector3 pos, PartType partType, Color courseColor, Color backgroundColor)
+	GameObject InstantiatePart(Vector3 pos, PartType partType, Color courseColor, Color backgroundColor, bool isGoal)
 	{
 		GameObject part = Instantiate (mPartPrefab, pos, Quaternion.identity);
 		Material material = part.GetComponent<SpriteRenderer> ().material;
@@ -107,6 +107,7 @@ public class CourseManager : MonoBehaviour {
 		material.SetColor ("_CourseColor", courseColor);
 		material.SetColor ("_BackgroundColor", backgroundColor);
 		material.SetFloat ("_CourseWidth", mCourseWidth);
+		material.SetInt ("_IsGoal", isGoal ? 1 : 0);
 		part.GetComponent<CoursePart> ().Setup (partType, pos);
 		mParts.Add (part);
 		return part;
@@ -130,9 +131,9 @@ public class CourseManager : MonoBehaviour {
 			}
 		}
 
-		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 2, PartType.B2T, courseColor, backgroundColor);
-		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 1, PartType.B2T, courseColor, backgroundColor);
-		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 0, PartType.B2T, courseColor, backgroundColor);
+		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 2, PartType.B2T, courseColor, backgroundColor, false);
+		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 1, PartType.B2T, courseColor, backgroundColor, false);
+		InstantiatePart (Vector3.zero - Vector3.up * mPartSize * 0, PartType.B2T, courseColor, backgroundColor, false);
 
 		PartType prevPartType = PartType.B2T;
 		Vector3 prevPartPos = Vector3.zero;
@@ -140,7 +141,7 @@ public class CourseManager : MonoBehaviour {
 		int visitedPosX = cVisitedSize / 2;
 		int visitedPosY = 1;
 		isVisited [visitedPosY, visitedPosX] = true;
-		int partNum = 0;
+		int partNum = 3;
 
 		List<PartType> partTypes = new List<PartType> ();
 		do {
@@ -282,11 +283,8 @@ public class CourseManager : MonoBehaviour {
 			{
 				Vector3 delta = Dir2Delta(currDir);
 				Vector3 partPos = prevPartPos + delta;
-				if(partNum == 59) {
-					courseColor = mCourseColor[(sColorIndex + 1) % mColorNum];
-					backgroundColor = mBackgroundColor[(sColorIndex + 1) % mColorNum];
-				}
-				InstantiatePart(partPos, partType, courseColor, backgroundColor);
+				bool isGoal = (partNum == 64);
+				InstantiatePart(partPos, partType, courseColor, backgroundColor, isGoal);
 
 				Vector2 delta2 = Dir2Delta2(currDir);
 				visitedPosX += (int)delta2.x;
@@ -298,7 +296,7 @@ public class CourseManager : MonoBehaviour {
 
 				++partNum;
 			}
-		} while (partNum < 60);
+		} while (partNum < 128);
 	}
 
 	// 部品から方向

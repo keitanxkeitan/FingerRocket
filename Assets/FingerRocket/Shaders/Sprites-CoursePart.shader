@@ -65,6 +65,7 @@ Shader "Sprites/CoursePart"
             fixed4 _CourseColor;
             fixed4 _BackgroundColor;
             float _CourseWidth;
+            int _IsGoal;
 
             bool checkCourseCurve(v2f IN, float2 center, float min, float max)
             {
@@ -125,7 +126,47 @@ Shader "Sprites/CoursePart"
 
             fixed4 coursePartFlag(v2f IN) : SV_Target
             {
-            	return checkCourse(IN, _PartType, _CourseWidth) ? _CourseColor : _BackgroundColor;
+            	if(checkCourse(IN, _PartType, _CourseWidth))
+            	{
+            		const int cCheckNumH = 32;
+            		const int cCheckNumV = 4;
+            		const float cCheckWidth = (float)cCheckNumV / cCheckNumH;
+            		bool isGoal = false;
+            		if(_IsGoal == 1)
+            		{
+            			if((_PartType == T2B) || (_PartType == T2L) || (_PartType == T2R) || (_PartType == T2B_Sin))
+            			{
+            				isGoal = (IN.texcoord.y >= 1.0 - cCheckWidth);
+            			}
+            			else if((_PartType == B2T) || (_PartType == B2L) || (_PartType == B2R) || (_PartType == B2T_Sin))
+            			{
+            				isGoal = (IN.texcoord.y <= cCheckWidth);
+            			}
+            			else if((_PartType == L2T) || (_PartType == L2B) || (_PartType == L2R) || (_PartType == L2R_Sin))
+            			{
+            				isGoal = (IN.texcoord.x <= cCheckWidth);
+            			}
+            			else
+            			{
+            				isGoal = (IN.texcoord.x >= 1.0 - cCheckWidth);
+            			}
+            		}
+
+            		if(!isGoal)
+            		{
+            			return _CourseColor;
+            		}
+            		else
+            		{
+            			int x = (int)(IN.texcoord.x * cCheckNumH);
+            			int y = (int)(IN.texcoord.y * cCheckNumH);
+            			return (((x + y) % 2) == 0) ? fixed4(0, 0, 0, 1) : fixed4(1, 1, 1, 1);
+            		}
+            	}
+            	else
+            	{
+            		return _BackgroundColor;
+            	}
             }
         ENDCG
         }

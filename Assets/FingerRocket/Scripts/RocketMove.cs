@@ -127,7 +127,7 @@ public class RocketMove : MonoBehaviour {
 		}
 		mTextTime.text = mTime.ToString ("F2");
 
-		if (coursePartIndex == 127) {
+		if (coursePartIndex == 64) {
 			mIsGoal = true;
 			GameObject.Find ("TextGoal").GetComponent<Text> ().text = "GOAL!";
 		}
