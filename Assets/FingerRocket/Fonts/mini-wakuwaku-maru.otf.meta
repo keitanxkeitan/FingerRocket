@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8750c804b8a174e3eaf8fec6d2063eab
+timeCreated: 1524685702
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: mini-wakuwaku-maru
+  fontNames:
+  - mini-wakuwaku-maru
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

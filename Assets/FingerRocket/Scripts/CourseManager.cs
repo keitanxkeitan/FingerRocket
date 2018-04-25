@@ -61,6 +61,9 @@ public class CourseManager : MonoBehaviour {
 	// 色
 	[SerializeField] private static int mColorNum = 6;
 
+	// ゴール部品インデックス
+	private const int cGoalPartIndex = 63;
+
 	//----------------------------------
 	// メンバ変数
 	//----------------------------------
@@ -285,7 +288,7 @@ public class CourseManager : MonoBehaviour {
 			{
 				Vector3 delta = Dir2Delta(currDir);
 				Vector3 partPos = prevPartPos + delta;
-				bool isGoal = (partNum == 64);
+				bool isGoal = (partNum == (2 + cGoalPartIndex));
 				InstantiatePart(partPos, partType, courseColor, backgroundColor, isGoal);
 
 				Vector2 delta2 = Dir2Delta2(currDir);
@@ -304,8 +307,8 @@ public class CourseManager : MonoBehaviour {
 	// スター生成
 	void CreateStar()
 	{
-		const int cStart = 5;
-		const int cInterval = 3;
+		const int cStart = 3;
+		const int cInterval = 2;
 		for (int i = cStart; i < 128; i += cInterval) {
 			int iTarget = i + (int)Random.Range (0, cInterval - 1);
 			GameObject part = mParts [iTarget];
@@ -605,10 +608,19 @@ public class CourseManager : MonoBehaviour {
 		int i = 0;
 		foreach (GameObject part in mParts) {
 			if (part.GetComponent<CoursePart> ().CheckInside (pos)) {
-				return i;
+				return i - 2;
 			}
 			++i;
 		}
 		return -1;
+	}
+
+	public bool CheckGoal(Vector3 pos)
+	{
+		int i = CheckInsideCoursePart (pos);
+		if (i >= 0) {
+			return i >= cGoalPartIndex;
+		}
+		return false;
 	}
 }

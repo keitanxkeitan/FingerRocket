@@ -47,6 +47,12 @@ TagManager:
   - name: Rocket
     uniqueID: 2270240099
     locked: 0
+  - name: StarShadow
+    uniqueID: 1851399837
+    locked: 0
   - name: Star
     uniqueID: 2759874515
+    locked: 0
+  - name: GameOver
+    uniqueID: 3985631283
     locked: 0

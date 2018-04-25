@@ -51,6 +51,9 @@ public class RocketMove : MonoBehaviour {
 	// スターマネージャ
 	public StarManager mStarManager;
 
+	// ゲームオーバーマネージャ
+	public GameOverManager mGameOverManager;
+
 	// コリジョン
 	public CollisionManager mCollisionManager;
 
@@ -79,6 +82,9 @@ public class RocketMove : MonoBehaviour {
 
 	// 無敵
 	private static bool sIsInvincible = false;
+
+	// 距離
+	private int mCoursePartIndex = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -109,6 +115,9 @@ public class RocketMove : MonoBehaviour {
 
 		// 無敵
 		// GameObject.Find("ToggleInvincible").GetComponent<Toggle>().isOn = sIsInvincible;
+
+		// 距離
+		mCoursePartIndex = 0;
 	}
 	
 	// Update is called once per frame
@@ -131,8 +140,10 @@ public class RocketMove : MonoBehaviour {
 
 		CalcParticle ();
 
-		int coursePartIndex = mCourseManager.CheckInsideCoursePart (transform.position);
-		mTextDistance.text = coursePartIndex.ToString ();
+		mCoursePartIndex = mCourseManager.CheckInsideCoursePart (transform.position);
+		if (mCoursePartIndex < 0)
+			mCoursePartIndex = 0;
+		mTextDistance.text = mCoursePartIndex.ToString ();
 
 		if (!mIsGoal) {
 			mTime += Time.deltaTime;
@@ -141,9 +152,13 @@ public class RocketMove : MonoBehaviour {
 
 		mTextStar.text = mStar.ToString ();
 
-		if (coursePartIndex == 64) {
+		if (!mIsGoal && mCourseManager.CheckGoal(transform.position))
+		{
 			mIsGoal = true;
-			GameObject.Find ("TextGoal").GetComponent<Text> ().text = "GOAL!";
+			// GameObject.Find ("TextGoal").GetComponent<Text> ().text = "GOAL!";
+
+			mGameOverManager.GameOver (true, mCoursePartIndex, mStar, mTime);
+			mStarManager.OnGameOver ();
 		}
 	}
 
@@ -184,7 +199,8 @@ public class RocketMove : MonoBehaviour {
 		if (sIsInvincible)
 			return;
 		
-		if (mCollisionManager.CheckSphereCollision (transform.position, 0.1f)) {
+		if (mCollisionManager.CheckSphereCollision (transform.position, 0.1f) ||
+			(mCourseManager.CheckInsideCoursePart(transform.position) < 0)) {
 			mIsDestroyed = true;
 			Destroy (GetComponent<SpriteRenderer> ());
 			mAudioSourceDestroy.PlayOneShot (mAudioSourceDestroy.clip);
@@ -193,6 +209,11 @@ public class RocketMove : MonoBehaviour {
 			mParticleSystemCrushSmoke.GetComponent<ParticleSystem> ().Play ();
 			mParticleSystemSmokeLeft.GetComponent<ParticleSystem> ().Stop ();
 			mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().Stop ();
+
+			if (!mIsGoal) {
+				mGameOverManager.GameOver (false, mCoursePartIndex, mStar, mTime);
+				mStarManager.OnGameOver ();
+			}
 		}
 
 		if (mStarManager.CheckSphereCollision (transform.position, 0.1f)) {

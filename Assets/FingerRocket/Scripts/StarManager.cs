@@ -50,4 +50,11 @@ public class StarManager : MonoBehaviour {
 		}
 		return false;
 	}
+
+	public void OnGameOver()
+	{
+		foreach (GameObject star in mStars) {
+			star.GetComponent<Star> ().OnGameOver ();
+		}
+	}
 }
