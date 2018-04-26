@@ -33,22 +33,41 @@ public class GameOverManager : MonoBehaviour {
 	// ゴールボーナス（リザルト）
 	[SerializeField] private Text mTextResultGoalBonus;
 
+	// ゲームオーバー
+	private bool mIsGameOver = false;
+
 	// ゴール
 	private bool mHasGoal = false;
+
+	// 経過時間
+	private float mGameOverTime = 0.0f;
 
 	// Use this for initialization
 	void Start () {
 		mGameOverBackground = GameObject.Find ("GameOverBackground");
 		Debug.Assert (mGameOverBackground);
+
+		mIsGameOver = false;
+
+		mGameOverTime = 0.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (mIsGameOver) {
+			mGameOverTime += Time.deltaTime;
+
+			if (mGameOverTime >= 1.0f) {
+				if (Input.GetKey (KeyCode.Space) || ((Input.touchCount > 0) && (Input.GetTouch (0).phase == TouchPhase.Began))) {
+					Application.LoadLevel ("Game");
+				}
+			}
+		}
 	}
 
 	public void GameOver(bool isGoal, int distance, int star, float time)
 	{
+		mIsGameOver = true;
 		mHasGoal = isGoal;
 
 		iTween.ValueTo(gameObject, iTween.Hash("from", 0.0f, "to", 0.65f, "time", 0.8f, "onupdate", "SetBackgroundAlpha"));
