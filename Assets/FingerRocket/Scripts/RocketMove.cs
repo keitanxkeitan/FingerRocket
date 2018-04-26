@@ -156,9 +156,11 @@ public class RocketMove : MonoBehaviour {
 		if (!mIsGoal) {
 			mTime += Time.deltaTime;
 			mTimeLeft -= Time.deltaTime;
+			if (mTimeLeft < 0.0f)
+				mTimeLeft = 0.0f;
 		}
 		// mTextTime.text = mTime.ToString ("F2");
-		mTextTime.text = ((int)mTimeLeft).ToString();
+		mTextTime.text = mTimeLeft.ToString("F1");
 
 		mTextStar.text = mStar.ToString ();
 
@@ -210,7 +212,8 @@ public class RocketMove : MonoBehaviour {
 			return;
 		
 		if (mCollisionManager.CheckSphereCollision (transform.position, 0.1f) ||
-			(mCourseManager.CheckInsideCoursePart(transform.position) < 0)) {
+			(mCourseManager.CheckInsideCoursePart(transform.position) < 0) ||
+			(mTimeLeft <= 0.0f)) {
 			mIsDestroyed = true;
 			Destroy (GetComponent<SpriteRenderer> ());
 			mAudioSourceDestroy.PlayOneShot (mAudioSourceDestroy.clip);
