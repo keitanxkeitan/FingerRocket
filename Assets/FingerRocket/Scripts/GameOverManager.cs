@@ -18,6 +18,9 @@ public class GameOverManager : MonoBehaviour {
 	// 距離
 	[SerializeField] private Text mTextDistance;
 
+	// 残り時間
+	[SerializeField] private Text mTextTime;
+
 	// スコア（リザルト）
 	[SerializeField] private Text mTextResultScore;
 
@@ -49,7 +52,7 @@ public class GameOverManager : MonoBehaviour {
 		mHasGoal = isGoal;
 
 		iTween.ValueTo(gameObject, iTween.Hash("from", 0.0f, "to", 0.65f, "time", 0.8f, "onupdate", "SetBackgroundAlpha"));
-		iTween.ValueTo(gameObject, iTween.Hash("from", 1.0f, "to", 0.0f, "time", 0.8f, "onupdate", "SetTextDistanceAlpha"));
+		iTween.ValueTo(gameObject, iTween.Hash("from", 1.0f, "to", 0.0f, "time", 0.8f, "onupdate", "SetTextAlpha"));
 		iTween.ValueTo(gameObject, iTween.Hash("from", 0.0f, "to", 1.0f, "time", 0.8f, "onupdate", "SetTextResultAlpha"));
 		iTween.ScaleTo (mSliderLeft.gameObject, iTween.Hash ("x", 0.0f, "y", 0.0f, "time", 0.4f, "easetype", "easeInBack"));
 		iTween.ScaleTo (mSliderRight.gameObject, iTween.Hash ("x", 0.0f, "y", 0.0f, "time", 0.4f, "easetype", "easeInBack"));
@@ -64,10 +67,17 @@ public class GameOverManager : MonoBehaviour {
 		mGameOverBackground.GetComponent<SpriteRenderer>().color = new Color(0,0,0, alpha);
 	}
 
-	void SetTextDistanceAlpha(float alpha) {
-		Color color = mTextDistance.color;
-		color.a = alpha;
-		mTextDistance.color = color;
+	void SetTextAlpha(float alpha) {
+		{
+			Color color = mTextDistance.color;
+			color.a = alpha;
+			mTextDistance.color = color;
+		}
+		{
+			Color color = mTextTime.color;
+			color.a = alpha;
+			mTextTime.color = color;
+		}
 	}
 
 	void SetTextResultAlpha(float alpha) {
@@ -104,6 +114,6 @@ public class GameOverManager : MonoBehaviour {
 		if (!isGoal)
 			return 0;
 
-		return 100;
+		return 100 + (int)(time * 100);
 	}
 }

@@ -257,6 +257,11 @@ Prefab:
       propertyPath: mTextResultGoalBonus
       value: 
       objectReference: {fileID: 1025701632}
+    - target: {fileID: 114281538874819500, guid: eea140d8b6fb64354b135a04c7707f60,
+        type: 2}
+      propertyPath: mTextTime
+      value: 
+      objectReference: {fileID: 673167313}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eea140d8b6fb64354b135a04c7707f60, type: 2}
   m_IsPrefabParent: 0
@@ -621,6 +626,11 @@ Prefab:
       propertyPath: mGameOverManager
       value: 
       objectReference: {fileID: 28346365}
+    - target: {fileID: 114333454335115358, guid: 5cabc020b606844d799582defe70b9ae,
+        type: 2}
+      propertyPath: mTimeLimit
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5cabc020b606844d799582defe70b9ae, type: 2}
   m_IsPrefabParent: 0
@@ -862,7 +872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &673167312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -871,7 +881,7 @@ RectTransform:
   m_GameObject: {fileID: 673167311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 1438011280}
   m_RootOrder: 3
@@ -901,7 +911,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 8750c804b8a174e3eaf8fec6d2063eab, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -1480,7 +1490,7 @@ RectTransform:
   m_GameObject: {fileID: 1025701630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 1438011280}
   m_RootOrder: 11
@@ -1798,7 +1808,7 @@ RectTransform:
   m_GameObject: {fileID: 1227430391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 1438011280}
   m_RootOrder: 9
@@ -12090,7 +12100,7 @@ RectTransform:
   m_GameObject: {fileID: 2023743969}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 1438011280}
   m_RootOrder: 10

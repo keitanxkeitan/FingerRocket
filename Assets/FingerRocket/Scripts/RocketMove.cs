@@ -21,6 +21,8 @@ public class RocketMove : MonoBehaviour {
 	[SerializeField] private float mSmokeStartSizeLow = 0.1f;
 	[SerializeField] private float mSmokeStartSizeHigh = 0.15f;
 
+	[SerializeField] private float mTimeLimit = 100.0f;
+
 	//----------------------------------
 	// メンバ変数
 	//----------------------------------
@@ -71,6 +73,9 @@ public class RocketMove : MonoBehaviour {
 	// タイム
 	private float mTime;
 
+	// 残り時間
+	private float mTimeLeft;
+
 	// スター
 	private int mStar;
 
@@ -103,6 +108,9 @@ public class RocketMove : MonoBehaviour {
 
 		// タイム
 		mTime = 0.0f;
+
+		// 残り時間
+		mTimeLeft = mTimeLimit;
 
 		// スター
 		mStar = 0;
@@ -147,8 +155,10 @@ public class RocketMove : MonoBehaviour {
 
 		if (!mIsGoal) {
 			mTime += Time.deltaTime;
+			mTimeLeft -= Time.deltaTime;
 		}
-		mTextTime.text = mTime.ToString ("F2");
+		// mTextTime.text = mTime.ToString ("F2");
+		mTextTime.text = ((int)mTimeLeft).ToString();
 
 		mTextStar.text = mStar.ToString ();
 
@@ -157,7 +167,7 @@ public class RocketMove : MonoBehaviour {
 			mIsGoal = true;
 			// GameObject.Find ("TextGoal").GetComponent<Text> ().text = "GOAL!";
 
-			mGameOverManager.GameOver (true, mCoursePartIndex, mStar, mTime);
+			mGameOverManager.GameOver (true, mCoursePartIndex, mStar, mTimeLeft);
 			mStarManager.OnGameOver ();
 		}
 	}
@@ -211,7 +221,7 @@ public class RocketMove : MonoBehaviour {
 			mParticleSystemSmokeRight.GetComponent<ParticleSystem> ().Stop ();
 
 			if (!mIsGoal) {
-				mGameOverManager.GameOver (false, mCoursePartIndex, mStar, mTime);
+				mGameOverManager.GameOver (false, mCoursePartIndex, mStar, mTimeLeft);
 				mStarManager.OnGameOver ();
 			}
 		}
