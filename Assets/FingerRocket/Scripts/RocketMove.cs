@@ -21,7 +21,7 @@ public class RocketMove : MonoBehaviour {
 	[SerializeField] private float mSmokeStartSizeLow = 0.1f;
 	[SerializeField] private float mSmokeStartSizeHigh = 0.15f;
 
-	[SerializeField] private float mTimeLimit = 100.0f;
+	[SerializeField] private float mTimeLimit = 180.0f;
 
 	//----------------------------------
 	// メンバ変数
