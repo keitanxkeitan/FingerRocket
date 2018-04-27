@@ -92,7 +92,7 @@ public class GameOverManager : MonoBehaviour {
 				bestScore = score;
 				PlayerPrefs.SetInt ("BestScore", score);
 
-				mRankingManager.SaveScore (score, isGoal, star, time);
+				mRankingManager.SaveScore (score, isGoal, star, time, PlayerPrefs.GetInt("PlayNum"));
 				mRankingManager.FetchRanking ();
 			}
 		}

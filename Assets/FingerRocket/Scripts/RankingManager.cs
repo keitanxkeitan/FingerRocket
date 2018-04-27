@@ -12,6 +12,7 @@ public class RankingManager : MonoBehaviour {
 	private const string cIsGoalKey = "IsGoal";
 	private const string cStarKey = "Star";
 	private const string cTimeKey = "Time";
+	private const string cPlayNumKey = "PlayNum";
 
 	private int mRanking;
 	public int Ranking
@@ -23,6 +24,11 @@ public class RankingManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// プレイ回数
+		int playNum = PlayerPrefs.GetInt ("PlayNum", 0);
+		++playNum;
+		PlayerPrefs.SetInt ("PlayNum", playNum);
+
 		if (sIsFirstTime) {
 			mRanking = -1;
 			sIsFirstTime = false;
@@ -36,7 +42,7 @@ public class RankingManager : MonoBehaviour {
 
 	}
 
-	public void SaveScore(int score, bool isGoal, int star, float time)
+	public void SaveScore(int score, bool isGoal, int star, float time, int playNum)
 	{
 		string objectId = PlayerPrefs.GetString (cPrefsObjectId, "");
 		bool isFirstTime = (objectId == "");
@@ -52,6 +58,7 @@ public class RankingManager : MonoBehaviour {
 		ranking [cIsGoalKey] = isGoal;
 		ranking [cStarKey] = star;
 		ranking [cTimeKey] = time;
+		ranking [cPlayNumKey] = playNum;
 
 		ranking.SaveAsync ((NCMBException e) => {
 			if(e != null) {
