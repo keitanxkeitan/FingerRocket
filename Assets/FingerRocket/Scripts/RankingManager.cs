@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using NCMB;
+using System;
 
 public class RankingManager : MonoBehaviour {
 
 	private const string cClassName = "Ranking";
 	private const string cPrefsObjectId = "ObjectId";
-	private const string cScoreKey = "score";
+	private const string cScoreKey = "Score";
+	private const string cIsGoalKey = "IsGoal";
+	private const string cStarKey = "Star";
+	private const string cTimeKey = "Time";
 
 	private int mRanking;
 	public int Ranking
@@ -32,7 +36,7 @@ public class RankingManager : MonoBehaviour {
 
 	}
 
-	public void SaveScore(int score)
+	public void SaveScore(int score, bool isGoal, int star, float time)
 	{
 		string objectId = PlayerPrefs.GetString (cPrefsObjectId, "");
 		bool isFirstTime = (objectId == "");
@@ -45,6 +49,9 @@ public class RankingManager : MonoBehaviour {
 		}
 
 		ranking [cScoreKey] = score;
+		ranking [cIsGoalKey] = isGoal;
+		ranking [cStarKey] = star;
+		ranking [cTimeKey] = time;
 
 		ranking.SaveAsync ((NCMBException e) => {
 			if(e != null) {
@@ -52,6 +59,8 @@ public class RankingManager : MonoBehaviour {
 			} else {
 				Debug.Log("Save Succeeded");
 				Debug.Log(ranking.ObjectId);
+				PlayerPrefs.SetString(cPrefsObjectId, ranking.ObjectId);
+				FetchRanking();
 			}
 		});
 	}
@@ -67,7 +76,7 @@ public class RankingManager : MonoBehaviour {
 		}
 
 		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> (cClassName);
-		query.OrderByAscending (cScoreKey);
+		query.OrderByDescending (cScoreKey);
 
 		Debug.Log ("query");
 
@@ -75,13 +84,27 @@ public class RankingManager : MonoBehaviour {
 
 			if (e == null) {
 				int ranking = 1;
+				int sameScoreNum = 0;
+				int prevScore = int.MaxValue;
 				foreach( NCMBObject obj in objList ){
+					int score = Convert.ToInt32(obj[cScoreKey]);
+					
+					if(score != prevScore)
+					{
+						ranking += sameScoreNum;
+						sameScoreNum = 1;
+						prevScore = score;
+					}
+					else
+					{
+						++sameScoreNum;
+					}
+
 					if(obj.ObjectId == objectId)
 					{
 						mRanking = ranking;
 						break;
 					}
-					++ranking;
 				}
 			} else {
 				Debug.Log("Query Failed");
