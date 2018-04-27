@@ -109,6 +109,14 @@ public class GameOverManager : MonoBehaviour {
 		//mTextResultDistance.text = "Sector " + distance.ToString ();
 		//mTextResultStar.text = "Gem " + star.ToString ();
 		//mTextResultGoalBonus.text = "Bonus " + CalcGoalBonus (isGoal, time).ToString ();
+
+		// 広告
+		{
+			int playNum = PlayerPrefs.GetInt ("PlayNum", 0);
+			if (playNum > 0 && playNum % 5 == 0) {
+				GameObject.Find ("UnityAds").GetComponent<UnityAds> ().ShowAd ();
+			}
+		}
 	}
 
 	void SetBackgroundAlpha(float alpha) {
