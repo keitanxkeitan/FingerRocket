@@ -125,7 +125,7 @@ public class GameOverManager : MonoBehaviour {
 
 	int CalcScore(bool isGoal, int distance, int star, float time)
 	{
-		return distance + star * (isGoal? 1 : 100) + CalcGoalBonus (isGoal, time);
+		return distance + star * (isGoal? 100 : 1) + CalcGoalBonus (isGoal, time);
 	}
 
 	int CalcGoalBonus(bool isGoal, float time)
