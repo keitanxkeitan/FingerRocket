@@ -57,6 +57,7 @@ public class CourseManager : MonoBehaviour {
 	{
 		get { return CourseManager.mCourseWidth; }
 	}
+	private float mTargetCourseWidth = mCourseWidth;
 
 	// 色
 	[SerializeField] private static int mColorNum = 6;
@@ -93,6 +94,10 @@ public class CourseManager : MonoBehaviour {
 		// 背景色
 		GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().backgroundColor = mBackgroundColor[sColorIndex];
 
+		// コース幅
+		mCourseWidth = 0.5f;
+		mTargetCourseWidth = mCourseWidth;
+
 		CreateCourse ();
 
 		CreateStar ();
@@ -100,7 +105,11 @@ public class CourseManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		// コース幅更新
+		if (Mathf.Abs (mTargetCourseWidth - mCourseWidth) > 0.0001f) {
+			float courseWidth = Mathf.Lerp (mCourseWidth, mTargetCourseWidth, 0.1f);
+			UpdateCourseWidth (courseWidth);
+		}
 	}
 
 	// 部品生成
@@ -307,14 +316,18 @@ public class CourseManager : MonoBehaviour {
 	// スター生成
 	void CreateStar()
 	{
+		float courseWidth = mCourseWidth;
 		const int cStart = 3;
 		const int cInterval = 2;
 		for (int i = cStart; i < 128; i += cInterval) {
+			if (i > 30)
+				mCourseWidth = courseWidth * 0.8f;
 			int iTarget = i + (int)Random.Range (0, cInterval - 1);
 			GameObject part = mParts [iTarget];
 			Vector3 pos = part.GetComponent<CoursePart> ().RandomStarPos ();
 			GameObject.Find ("StarManager").GetComponent<StarManager> ().InstantiateStar (pos);
 		}
+		mCourseWidth = courseWidth;
 	}
 
 	// 部品から方向
@@ -622,5 +635,26 @@ public class CourseManager : MonoBehaviour {
 			return i >= cGoalPartIndex;
 		}
 		return false;
+	}
+
+	public float CheckAchievement(Vector3 pos)
+	{
+		int i = CheckInsideCoursePart (pos);
+		if (i < 0)
+			i = 0;
+		return Mathf.Clamp01 ((float)i / cGoalPartIndex);
+	}
+
+	public void RequestChangeCourseWidth(float targetWidth)
+	{
+		mTargetCourseWidth = targetWidth;
+	}
+
+	private void UpdateCourseWidth(float courseWidth)
+	{
+		mCourseWidth = courseWidth;
+		foreach (GameObject part in mParts) {
+			part.GetComponent<SpriteRenderer>().material.SetFloat("_CourseWidth", mCourseWidth);
+		}
 	}
 }

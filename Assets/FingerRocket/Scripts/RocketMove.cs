@@ -91,6 +91,9 @@ public class RocketMove : MonoBehaviour {
 	// 距離
 	private int mCoursePartIndex = 0;
 
+	// コース幅変更
+	private bool mHasChangeCourseWidth = false;
+
 	// Use this for initialization
 	void Start () {
 		// 速度
@@ -99,6 +102,10 @@ public class RocketMove : MonoBehaviour {
 
 		// 角速度
 		mRotVel = 0.0f;
+
+		// スライダー
+		mSliderLeft.enabled = false;
+		mSliderRight.enabled = false;
 
 		// SE
 		mAudioSourceDestroy = GetComponent<AudioSource>();
@@ -126,10 +133,19 @@ public class RocketMove : MonoBehaviour {
 
 		// 距離
 		mCoursePartIndex = 0;
+
+		// コース幅変更
+		mHasChangeCourseWidth = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// スライダー
+		if (!mSliderLeft.enabled && Input.touchCount == 0) {
+			mSliderLeft.enabled = true;
+			mSliderRight.enabled = true;
+		}
+
 		// sSliderCameraSizeValue = GameObject.Find ("SliderCameraSize").GetComponent<Slider> ().value;
 		// GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().orthographicSize = Mathf.Lerp (5.0f, 200.0f, sSliderCameraSizeValue);
 
@@ -152,6 +168,13 @@ public class RocketMove : MonoBehaviour {
 		if (mCoursePartIndex < 0)
 			mCoursePartIndex = 0;
 		mTextDistance.text = mCoursePartIndex.ToString ();
+
+		// コース幅変更
+		float achievement = mCourseManager.CheckAchievement(transform.position);
+		if (!mHasChangeCourseWidth && (achievement >= 0.5f)) {
+			mCourseManager.RequestChangeCourseWidth (CourseManager.CourseWidth * 0.8f);
+			mHasChangeCourseWidth = true;
+		}
 
 		if (!mIsGoal) {
 			mTime += Time.deltaTime;
