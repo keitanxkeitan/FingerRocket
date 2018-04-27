@@ -24,6 +24,12 @@ public class GameOverManager : MonoBehaviour {
 	// スコア（リザルト）
 	[SerializeField] private Text mTextResultScore;
 
+	// ベスト（リザルト）
+	[SerializeField] private Text mTextResultBest;
+
+	// ランク（リザルト）
+	[SerializeField] private Text mTextResultRank;
+
 	// 距離（リザルト）
 	[SerializeField] private Text mTextResultDistance;
 
@@ -32,6 +38,9 @@ public class GameOverManager : MonoBehaviour {
 
 	// ゴールボーナス（リザルト）
 	[SerializeField] private Text mTextResultGoalBonus;
+
+	// ランキングマネージャ
+	[SerializeField] private RankingManager mRankingManager;
 
 	// ゲームオーバー
 	private bool mIsGameOver = false;
@@ -63,6 +72,8 @@ public class GameOverManager : MonoBehaviour {
 				}
 			}
 		}
+
+		mTextResultRank.text = "RANK " + (mRankingManager.Ranking >= 0 ? mRankingManager.Ranking.ToString () : "?");
 	}
 
 	public void GameOver(bool isGoal, int distance, int star, float time)
@@ -70,16 +81,33 @@ public class GameOverManager : MonoBehaviour {
 		mIsGameOver = true;
 		mHasGoal = isGoal;
 
+		int score = CalcScore (isGoal, distance, star, time);
+
+		// 保存
+		int bestScore;
+		{
+			bestScore = PlayerPrefs.GetInt ("BestScore", -1);
+			if ((bestScore < 0) || (score > bestScore))
+			{
+				PlayerPrefs.SetInt ("BestScore", score);
+
+				mRankingManager.SaveScore (score);
+				mRankingManager.FetchRanking ();
+			}
+		}
+
 		iTween.ValueTo(gameObject, iTween.Hash("from", 0.0f, "to", 0.65f, "time", 0.8f, "onupdate", "SetBackgroundAlpha"));
 		iTween.ValueTo(gameObject, iTween.Hash("from", 1.0f, "to", 0.0f, "time", 0.8f, "onupdate", "SetTextAlpha"));
 		iTween.ValueTo(gameObject, iTween.Hash("from", 0.0f, "to", 1.0f, "time", 0.8f, "onupdate", "SetTextResultAlpha"));
 		iTween.ScaleTo (mSliderLeft.gameObject, iTween.Hash ("x", 0.0f, "y", 0.0f, "time", 0.4f, "easetype", "easeInBack"));
 		iTween.ScaleTo (mSliderRight.gameObject, iTween.Hash ("x", 0.0f, "y", 0.0f, "time", 0.4f, "easetype", "easeInBack"));
 
-		mTextResultScore.text = "Score " + CalcScore (isGoal, distance, star, time).ToString ();
-		mTextResultDistance.text = "Sector " + distance.ToString ();
-		mTextResultStar.text = "Gem " + star.ToString ();
-		mTextResultGoalBonus.text = "Bonus " + CalcGoalBonus (isGoal, time).ToString ();
+		mTextResultScore.text = score.ToString ();
+		mTextResultBest.text = "BEST " + bestScore.ToString ();
+		mTextResultRank.text = "RANK " + (mRankingManager.Ranking >= 0 ? mRankingManager.Ranking.ToString () : "?");
+		//mTextResultDistance.text = "Sector " + distance.ToString ();
+		//mTextResultStar.text = "Gem " + star.ToString ();
+		//mTextResultGoalBonus.text = "Bonus " + CalcGoalBonus (isGoal, time).ToString ();
 	}
 
 	void SetBackgroundAlpha(float alpha) {
@@ -104,6 +132,16 @@ public class GameOverManager : MonoBehaviour {
 			Color color = mTextResultScore.color;
 			color.a = alpha;
 			mTextResultScore.color = color;
+		}
+		{
+			Color color = mTextResultBest.color;
+			color.a = alpha;
+			mTextResultBest.color = color;
+		}
+		{
+			Color color = mTextResultRank.color;
+			color.a = alpha;
+			mTextResultRank.color = color;
 		}
 		{
 			Color color = mTextResultDistance.color;
