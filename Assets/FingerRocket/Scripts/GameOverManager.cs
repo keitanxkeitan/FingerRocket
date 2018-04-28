@@ -114,7 +114,7 @@ public class GameOverManager : MonoBehaviour {
 		// 広告
 		{
 			int playNum = PlayerPrefs.GetInt ("PlayNum", 0);
-			if (playNum > 0 && playNum % 5 == 0) {
+			if (playNum > 0 && (playNum % 5 == 0) && (bestScore >= 10)) {
 				GameObject.Find ("UnityAds").GetComponent<UnityAds> ().ShowAd ();
 			}
 		}
