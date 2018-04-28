@@ -87,7 +87,8 @@ public class GameOverManager : MonoBehaviour {
 		int bestScore;
 		{
 			bestScore = PlayerPrefs.GetInt ("BestScore", -1);
-			if ((bestScore < 0) || (score > bestScore))
+			bool isLastSaveSucceeded = (PlayerPrefs.GetInt ("LastSaveSucceeded", 1) == 1);
+			if ((bestScore < 0) || (score > bestScore) || !isLastSaveSucceeded)
 			{
 				bestScore = score;
 				PlayerPrefs.SetInt ("BestScore", score);

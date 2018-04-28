@@ -63,10 +63,12 @@ public class RankingManager : MonoBehaviour {
 		ranking.SaveAsync ((NCMBException e) => {
 			if(e != null) {
 				Debug.Log("Save Failed");
+				PlayerPrefs.SetInt("LastSaveSucceeded", 0);
 			} else {
 				Debug.Log("Save Succeeded");
 				Debug.Log(ranking.ObjectId);
 				PlayerPrefs.SetString(cPrefsObjectId, ranking.ObjectId);
+				PlayerPrefs.SetInt("LastSaveSucceeded", 1);
 				FetchRanking();
 			}
 		});
