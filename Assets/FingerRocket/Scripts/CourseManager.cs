@@ -60,7 +60,7 @@ public class CourseManager : MonoBehaviour {
 	private float mTargetCourseWidth = mCourseWidth;
 
 	// 色
-	[SerializeField] private static int mColorNum = 6;
+	[SerializeField] private static int mColorNum = 27;
 
 	// ゴール部品インデックス
 	private const int cGoalPartIndex = 63;
@@ -90,6 +90,7 @@ public class CourseManager : MonoBehaviour {
 			colorIndex = Random.Range(0, mColorNum - 1);
 		} while(sColorIndex == colorIndex);
 		sColorIndex = colorIndex;
+		Debug.Log ("ColorIndex = " + sColorIndex);
 
 		// 背景色
 		GameObject.FindWithTag ("MainCamera").GetComponent<Camera> ().backgroundColor = mBackgroundColor[sColorIndex];

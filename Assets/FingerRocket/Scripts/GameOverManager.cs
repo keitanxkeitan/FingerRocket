@@ -73,7 +73,7 @@ public class GameOverManager : MonoBehaviour {
 			}
 		}
 
-		mTextResultRank.text = "RANK " + (mRankingManager.Ranking > 0 ? mRankingManager.Ranking.ToString () : "?");
+		mTextResultRank.text = "World Rank " + (mRankingManager.Ranking > 0 ? mRankingManager.Ranking.ToString () : "?");
 	}
 
 	public void GameOver(bool isGoal, int distance, int star, float time)
@@ -104,8 +104,8 @@ public class GameOverManager : MonoBehaviour {
 		iTween.ScaleTo (mSliderRight.gameObject, iTween.Hash ("x", 0.0f, "y", 0.0f, "time", 0.4f, "easetype", "easeInBack"));
 
 		mTextResultScore.text = score.ToString ();
-		mTextResultBest.text = "BEST " + bestScore.ToString ();
-		mTextResultRank.text = "RANK " + (mRankingManager.Ranking > 0 ? mRankingManager.Ranking.ToString () : "?");
+		mTextResultBest.text = "Best " + bestScore.ToString ();
+		mTextResultRank.text = "World Rank " + (mRankingManager.Ranking > 0 ? mRankingManager.Ranking.ToString () : "?");
 		//mTextResultDistance.text = "Sector " + distance.ToString ();
 		//mTextResultStar.text = "Gem " + star.ToString ();
 		//mTextResultGoalBonus.text = "Bonus " + CalcGoalBonus (isGoal, time).ToString ();

@@ -107,7 +107,7 @@ public class CoursePart : MonoBehaviour {
 			Vector3 pos = mPos;
 			pos.x += Random.Range (-cPartSizeHalf, cPartSizeHalf);
 			pos.y += Random.Range (-cPartSizeHalf, cPartSizeHalf);
-			if (!CheckSphereCollision (pos, 0.15f)) {
+			if (!CheckSphereCollision (pos, 0.2f)) {
 				return pos;
 			}
 		}
