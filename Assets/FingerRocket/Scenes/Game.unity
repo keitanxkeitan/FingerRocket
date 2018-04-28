@@ -690,6 +690,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1182910119146880, guid: 2ca6aa2bf107f4845a91f45ad79fdef1,
         type: 2}
+    - target: {fileID: 114333454335115358, guid: 5cabc020b606844d799582defe70b9ae,
+        type: 2}
+      propertyPath: mSmokeStartSizeLow
+      value: 0.075
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5cabc020b606844d799582defe70b9ae, type: 2}
   m_IsPrefabParent: 0
