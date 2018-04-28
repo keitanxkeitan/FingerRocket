@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/FingerRocket/Scenes/Title.unity
+    guid: b3d245bb811e5489aaf0fe9a9b7a8fc6
+  - enabled: 1
+    path: Assets/FingerRocket/Scenes/Game.unity
+    guid: 7ff024e85309e4f339a6b76b28a57149
