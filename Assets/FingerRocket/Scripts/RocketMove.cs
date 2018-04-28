@@ -141,7 +141,7 @@ public class RocketMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// スライダー
-		if (!mSliderLeft.enabled && Input.touchCount == 0) {
+		if (!mSliderLeft.enabled && (mTime >= 0.1f)) {
 			mSliderLeft.enabled = true;
 			mSliderRight.enabled = true;
 		}
