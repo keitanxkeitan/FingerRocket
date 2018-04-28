@@ -63,7 +63,7 @@ public class CourseManager : MonoBehaviour {
 	[SerializeField] private static int mColorNum = 27;
 
 	// ゴール部品インデックス
-	private const int cGoalPartIndex = 63;
+	private const int cGoalPartIndex = 41;
 
 	//----------------------------------
 	// メンバ変数
@@ -163,19 +163,19 @@ public class CourseManager : MonoBehaviour {
 			partTypes.Clear();
 			if ((currDir == Dir.Left) || (currDir == Dir.Right)) {
 				bool isSpecial = false;
-				if(partNum < 10)
+				if(partNum < 8)
 				{
 					isSpecial = false;
 				}
-				else if(partNum < 20)
+				else if(partNum < 16)
 				{
 					isSpecial = Random.Range(0, 4) == 0;
 				}
-				else if(partNum < 30)
+				else if(partNum < 24)
 				{
 					isSpecial = Random.Range(0, 2) == 0;
 				}
-				else if(partNum < 40)
+				else if(partNum < 32)
 				{
 					isSpecial = Random.Range(0, 1) == 0;
 				}
@@ -186,14 +186,14 @@ public class CourseManager : MonoBehaviour {
 				if(isSpecial)
 				{
 					List<int> table = new List<int>();
-					if(partNum < 20)
+					if(partNum < 16)
 					{
 						table.Add(2);
 						table.Add(2);
 						table.Add(3);
 						table.Add(3);
 					}
-					else if(partNum < 30)
+					else if(partNum < 24)
 					{
 						table.Add(2);
 						table.Add(2);
@@ -202,7 +202,7 @@ public class CourseManager : MonoBehaviour {
 						table.Add(1);
 						table.Add(1);
 					}
-					else if(partNum < 40)
+					else if(partNum < 32)
 					{
 						table.Add(2);
 						table.Add(2);
@@ -276,7 +276,7 @@ public class CourseManager : MonoBehaviour {
 			}
 
 			for(int i = 0; i < partTypes.Count; ++i) {
-				if (partNum >= 10 && Random.Range(0, 4) == 0) {
+				if (partNum >= 8 && Random.Range(0, 4) == 0) {
 					switch(partTypes[ i ]) {
 					case PartType.T2B:
 						partTypes[ i ] = PartType.T2B_Sin;
@@ -311,7 +311,7 @@ public class CourseManager : MonoBehaviour {
 
 				++partNum;
 			}
-		} while (partNum < 128);
+		} while (partNum < 64);
 	}
 
 	// スター生成
@@ -320,8 +320,8 @@ public class CourseManager : MonoBehaviour {
 		float courseWidth = mCourseWidth;
 		const int cStart = 3;
 		const int cInterval = 2;
-		for (int i = cStart; i < 128; i += cInterval) {
-			if (i > 30)
+		for (int i = cStart; i < 64; i += cInterval) {
+			if (i > ((cGoalPartIndex / 2) - 1))
 				mCourseWidth = courseWidth * 0.8f;
 			int iTarget = i + (int)Random.Range (0, cInterval - 1);
 			GameObject part = mParts [iTarget];
