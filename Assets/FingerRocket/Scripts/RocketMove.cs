@@ -27,6 +27,9 @@ public class RocketMove : MonoBehaviour {
 	// メンバ変数
 	//----------------------------------
 
+	// BGM プレハブ
+	public GameObject mBGMPrefab;
+
 	// 速度
 	private float mSpeed;
 	private Vector3 mMoveDir;
@@ -96,6 +99,11 @@ public class RocketMove : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// BGM
+		if (GameObject.Find ("BGM(Clone)") == null) {
+			Instantiate (mBGMPrefab);
+		}
+
 		// 速度
 		mSpeed = 0.0f;
 		mMoveDir = Vector3.up;
