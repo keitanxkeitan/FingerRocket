@@ -116,9 +116,9 @@ public class GameOverManager : MonoBehaviour {
 		mTextResultScore.text = score.ToString ();
 		mTextResultBest.text = "Best " + bestScore.ToString ();
 		mTextResultRank.text = "World Rank " + (mRankingManager.Ranking > 0 ? mRankingManager.Ranking.ToString () : "?");
-		mTextResultDistance.text = "Sector " + distance.ToString () + " x " + cScoreDistance.ToString () + " = " + (distance * cScoreDistance).ToString ();
-		mTextResultStar.text = "Gem " + star.ToString () + " x " + (isGoal ? cScoreStarGoal : cScoreStarNoGoal).ToString () + " = " + (star * (isGoal ? cScoreStarNoGoal : cScoreStarGoal)).ToString ();
-		mTextResultGoalBonus.text = "Goal Bonus " + time.ToString("F2") + " x " + cScoreGoalTimeBonus.ToString() + " = " + CalcGoalBonus (isGoal, time).ToString ();
+		mTextResultDistance.text = "Sector " + distance.ToString () + " x " + cScoreDistance.ToString () + " → " + (distance * cScoreDistance).ToString ();
+		mTextResultStar.text = "Gem " + star.ToString () + " x " + (isGoal ? cScoreStarGoal : cScoreStarNoGoal).ToString () + " → " + (star * (isGoal ? cScoreStarNoGoal : cScoreStarGoal)).ToString ();
+		mTextResultGoalBonus.text = "Goal Bonus " + time.ToString("F2") + " x " + cScoreGoalTimeBonus.ToString() + " → " + CalcGoalBonus (isGoal, time).ToString ();
 
 		// 広告
 		{
