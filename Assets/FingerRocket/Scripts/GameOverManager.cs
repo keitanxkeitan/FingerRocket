@@ -6,6 +6,15 @@ using UnityEngine.UI;
 public class GameOverManager : MonoBehaviour {
 
 	//----------------------------------
+	// パラメータ
+	//----------------------------------
+
+	private const int cScoreDistance = 1;
+	private const int cScoreStarNoGoal = 1;
+	private const int cScoreStarGoal = 100;
+	private const int cScoreGoalTimeBonus = 100;
+
+	//----------------------------------
 	// メンバ変数
 	//----------------------------------
 
@@ -107,9 +116,9 @@ public class GameOverManager : MonoBehaviour {
 		mTextResultScore.text = score.ToString ();
 		mTextResultBest.text = "Best " + bestScore.ToString ();
 		mTextResultRank.text = "World Rank " + (mRankingManager.Ranking > 0 ? mRankingManager.Ranking.ToString () : "?");
-		//mTextResultDistance.text = "Sector " + distance.ToString ();
-		//mTextResultStar.text = "Gem " + star.ToString ();
-		//mTextResultGoalBonus.text = "Bonus " + CalcGoalBonus (isGoal, time).ToString ();
+		mTextResultDistance.text = "Sector " + distance.ToString () + " x " + cScoreDistance.ToString () + " = " + (distance * cScoreDistance).ToString ();
+		mTextResultStar.text = "Gem " + star.ToString () + " x " + (isGoal ? cScoreStarGoal : cScoreStarNoGoal).ToString () + " = " + (star * (isGoal ? cScoreStarNoGoal : cScoreStarGoal)).ToString ();
+		mTextResultGoalBonus.text = "Goal Bonus " + time.ToString("F2") + " x " + cScoreGoalTimeBonus.ToString() + " = " + CalcGoalBonus (isGoal, time).ToString ();
 
 		// 広告
 		{
@@ -173,7 +182,7 @@ public class GameOverManager : MonoBehaviour {
 
 	int CalcScore(bool isGoal, int distance, int star, float time)
 	{
-		return distance + star * (isGoal? 100 : 1) + CalcGoalBonus (isGoal, time);
+		return distance * cScoreDistance + star * (isGoal? cScoreStarGoal : cScoreStarNoGoal) + CalcGoalBonus (isGoal, time);
 	}
 
 	int CalcGoalBonus(bool isGoal, float time)
@@ -181,6 +190,6 @@ public class GameOverManager : MonoBehaviour {
 		if (!isGoal)
 			return 0;
 
-		return 1000 + (int)(time * 100);
+		return (int)(time * cScoreGoalTimeBonus);
 	}
 }
