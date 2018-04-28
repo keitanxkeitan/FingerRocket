@@ -258,12 +258,12 @@ SpriteRenderer:
   m_SortingLayerID: -2024727197
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fd52e6e1dd34844ee84f047cddc5aa8a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 907dcde39df754821b2a826471420b39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4, y: 1.62}
+  m_Size: {x: 4, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -745,8 +745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4, y: 0.8}
   m_AnchorMax: {x: 0.4, y: 0.8}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 240, y: 60}
+  m_AnchoredPosition: {x: 19, y: 0}
+  m_SizeDelta: {x: 270, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &711264008
 MonoBehaviour:
@@ -780,7 +780,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: FINGER
+  m_Text: THUMBS
 --- !u!222 &711264009
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -889,8 +889,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4, y: 0.8}
   m_AnchorMax: {x: 0.4, y: 0.8}
-  m_AnchoredPosition: {x: -4, y: -8}
-  m_SizeDelta: {x: 240, y: 60}
+  m_AnchoredPosition: {x: 15, y: -8}
+  m_SizeDelta: {x: 270, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039146841
 MonoBehaviour:
@@ -924,7 +924,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: FINGER
+  m_Text: THUMBS
 --- !u!222 &1039146842
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1037,8 +1037,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4, y: 0.8}
   m_AnchorMax: {x: 0.4, y: 0.8}
-  m_AnchoredPosition: {x: -6, y: -12}
-  m_SizeDelta: {x: 240, y: 60}
+  m_AnchoredPosition: {x: 13, y: -12}
+  m_SizeDelta: {x: 270, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1233869406
 MonoBehaviour:
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: FINGER
+  m_Text: THUMBS
 --- !u!222 &1233869407
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1111,8 +1111,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4, y: 0.8}
   m_AnchorMax: {x: 0.4, y: 0.8}
-  m_AnchoredPosition: {x: -2, y: -4}
-  m_SizeDelta: {x: 240, y: 60}
+  m_AnchoredPosition: {x: 17, y: -4}
+  m_SizeDelta: {x: 270, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1245038507
 MonoBehaviour:
@@ -1146,7 +1146,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: FINGER
+  m_Text: THUMBS
 --- !u!222 &1245038508
 CanvasRenderer:
   m_ObjectHideFlags: 0
