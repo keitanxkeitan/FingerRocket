@@ -53,8 +53,8 @@ public class TitleManager : MonoBehaviour {
 			mTouchToStartJumpVel = 2.0f;
 		}
 
-		mTouchToStartJumpVel *= 0.99f;
-		mTouchToStartJumpVel -= 0.15f;
+		mTouchToStartJumpVel *= Mathf.Pow(0.99f, Time.deltaTime);
+		mTouchToStartJumpVel -= 0.15f * Time.deltaTime * 60;
 		mTouchToStartPosY += mTouchToStartJumpVel;
 
 		if (mTouchToStartPosY <= 0.0f) {
@@ -64,7 +64,7 @@ public class TitleManager : MonoBehaviour {
 
 		{
 			Vector3 pos = mTouchToStartInitPos;
-			pos.y += mTouchToStartPosY;
+			pos.y += mTouchToStartPosY * Time.deltaTime * 60;
 			mTouchToStart.transform.position = pos;
 		}
 	}
