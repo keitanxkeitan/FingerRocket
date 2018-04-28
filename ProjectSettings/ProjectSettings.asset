@@ -137,7 +137,7 @@ PlayerSettings:
   protectGraphicsMemory: 0
   useHDRDisplay: 0
   applicationIdentifier:
-    iOS: com.keitanxkeitan.FingerRocket
+    iOS: com.keitanxkeitan.FingerRocket2
   buildNumber:
     iOS: 1.0.0
   AndroidBundleVersionCode: 1
